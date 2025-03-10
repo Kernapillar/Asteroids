@@ -1,14 +1,17 @@
 import pygame
 from constants import *
 from player import Player
+from asteroid import Asteroid
 
 def main(): 
     pygame.init()
 
     updateable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
+    asteroids = pygame.sprite.Group()
     
     Player.containers = (updateable, drawable)
+    Asteroid.containers = (asteroids, updateable, drawable)
 
     clock = pygame.time.Clock()
     dt = 0
