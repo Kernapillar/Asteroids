@@ -5,6 +5,8 @@ from player import Player
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
 from shot import Shot
+from bomb import Bomb
+from explosion import Explosion
 
 def main(): 
     pygame.init()
@@ -13,11 +15,15 @@ def main():
     drawable = pygame.sprite.Group()
     asteroids = pygame.sprite.Group()
     shots = pygame.sprite.Group()
+    bombs = pygame.sprite.Group()
+    explosions = pygame.sprite.Group()
     
     Player.containers = (updateable, drawable)
     Asteroid.containers = (asteroids, updateable, drawable)
     AsteroidField.containers = (updateable)
     Shot.containers = (updateable, drawable, shots)
+    Bomb.containers = (updateable, drawable, bombs)
+    Explosion.containers = (updateable, drawable, explosions)
 
     clock = pygame.time.Clock()
     dt = 0
@@ -44,6 +50,16 @@ def main():
                 if asteroid.detect_collision(shot):
                     asteroid.split()
                     shot.kill()
+
+        for asteroid in asteroids: 
+            for bomb in bombs: 
+                if asteroid.detect_collision(bomb):
+                    explosion = Explosion(bomb.position.x, bomb.position.y)
+                    bomb.kill()
+
+        for asteroid in asteroids: 
+            if asteroid.detect_collision(explosion):
+                bomb.explode()
 
         for object in drawable: 
             object.draw(screen)
