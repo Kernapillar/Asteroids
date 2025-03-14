@@ -40,7 +40,7 @@ class Player(CircleShape):
     def bomb(self): 
         if self.bomb_timer > 0: 
             return
-        self.cd_timer = PLAYER_BOMB_COOLDOWN
+        self.bomb_timer = PLAYER_BOMB_COOLDOWN
         bomb = Bomb(self.position.x, self.position.y)
         bomb.velocity = pygame.Vector2(0, 1).rotate(self.rotation) * PLAYER_SHOOT_SPEED
 
