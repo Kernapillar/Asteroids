@@ -54,12 +54,12 @@ def main():
         for asteroid in asteroids: 
             for bomb in bombs: 
                 if asteroid.detect_collision(bomb):
-                    explosion = Explosion(bomb.position.x, bomb.position.y)
-                    bomb.kill()
+                    bomb.explode()
 
         for asteroid in asteroids: 
-            if asteroid.detect_collision(explosion):
-                bomb.explode()
+            for explosion in explosions: 
+                if asteroid.detect_collision(explosion):
+                    asteroid.kill()
 
         for object in drawable: 
             object.draw(screen)
