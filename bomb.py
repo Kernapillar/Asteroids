@@ -12,4 +12,7 @@ class Bomb(CircleShape):
 
     def update(self, dt): 
         self.position += self.velocity * dt
-        self.duration -= dt
+    
+    def explode(self): 
+        self.kill()
+        explosion = Explosion(self.position.x, self.position.y)
