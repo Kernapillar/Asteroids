@@ -4,15 +4,16 @@ from constants import SHOT_RADIUS, EXPLOSION_RADIUS
 
 class Explosion(CircleShape): 
     def __init__(self, x, y):
-        super().__init__(x, y, EXPLOSION_RADIUS)
+        super().__init__(x, y, SHOT_RADIUS)
         self.duration = 0.5
-    
+
     def draw(self, screen): 
         pygame.draw.circle(screen, "red", self.position, self.radius, 2)
 
     def update(self, dt): 
-        # self.position += self.velocity * dt
         self.duration -= dt
+        if self.radius < EXPLOSION_RADIUS: 
+            self.radius += 7
         if self.duration <= 0: 
             self.kill()
     
