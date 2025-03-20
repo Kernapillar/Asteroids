@@ -70,7 +70,6 @@ def main():
             for shot in shots: 
                 if asteroid.detect_collision(shot):
                     asteroid.split()
-                    # update_score(10)
                     shot.kill()
 
         for asteroid in asteroids: 
@@ -82,7 +81,6 @@ def main():
             for explosion in explosions: 
                 if asteroid.detect_collision(explosion):
                     asteroid.split()
-                    # update_score(10)
             
 
 
