@@ -28,32 +28,47 @@ def main():
     clock = pygame.time.Clock()
     dt = 0
 
+    score = 0
+
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     player = Player(x = SCREEN_WIDTH / 2, y = SCREEN_HEIGHT / 2)
     asteroid_field = AsteroidField()
+
+    font = pygame.font.Font(None, 32)
+    text = font.render(f"Score: {score}", True, "White")
+    text_rectangle = text.get_rect()
+    text_rectangle.center = (100, SCREEN_HEIGHT - 50)
+
+    def update_score(num = 0):
+        nonlocal score, text
+        score += num
+        text = font.render(f"Score: {score}", True, "White")
+        screen.blit(text, text_rectangle)
 
     while True: 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
         screen.fill("black")
+        update_score()
 
         updateable.update(dt)
 
         for asteroid in asteroids: 
             if player.detect_collision(asteroid):
-                print("Game over!")
+                print(f"Game over! Final Score: {score}")
                 sys.exit()
 
         for explosion in explosions: 
             if player.detect_collision(explosion):
-                print("Game over!")
+                print(f"Game over! Final Score: {score}")
                 sys.exit()
 
         for asteroid in asteroids: 
             for shot in shots: 
                 if asteroid.detect_collision(shot):
                     asteroid.split()
+                    update_score(10)
                     shot.kill()
 
         for asteroid in asteroids: 
@@ -64,7 +79,8 @@ def main():
         for asteroid in asteroids: 
             for explosion in explosions: 
                 if asteroid.detect_collision(explosion):
-                    asteroid.kill()
+                    asteroid.split()
+                    update_score(10)
             
 
 
