@@ -34,9 +34,7 @@ class AsteroidField(pygame.sprite.Sprite):
         self.update_score = update_score_callback
 
     def spawn(self, radius, position, velocity):
-        chance = random.randint(1, 100)
-        golden = chance <= 10 
-        asteroid = Asteroid(position.x, position.y, radius, self.update_score, golden)
+        asteroid = Asteroid(position.x, position.y, radius, self.update_score)
         asteroid.velocity = velocity
 
     def update(self, dt):

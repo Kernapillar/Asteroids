@@ -28,8 +28,12 @@ class Asteroid(CircleShape):
         child1 = self.velocity.rotate(new_angle)
         child2 = self.velocity.rotate(-new_angle)
         child_radius = self.radius - ASTEROID_MIN_RADIUS
-        asteroid1 = Asteroid(self.position.x, self.position.y, child_radius, self.update_score, self.golden)
+        chance1 = random.randint(1, 100)
+        golden1 = chance1 <= 10 
+        chance2 = random.randint(1, 100)
+        golden2 = chance2 <= 10 
+        asteroid1 = Asteroid(self.position.x, self.position.y, child_radius, self.update_score, self.golden or golden1)
         asteroid1.velocity = child1 * 1.2
-        asteroid2 = Asteroid(self.position.x, self.position.y, child_radius, self.update_score, self.golden)
+        asteroid2 = Asteroid(self.position.x, self.position.y, child_radius, self.update_score, self.golden or golden2)
         asteroid2.velocity = child2 * 1.2
         
