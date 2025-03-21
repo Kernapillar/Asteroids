@@ -8,10 +8,8 @@ class Asteroid(CircleShape):
         super().__init__(x, y, radius)
         self.update_score = update_score_callback 
         self.golden = golden
-        if golden: 
-            self.color = "gold"
-        else: 
-            self.color = "white"
+        self.color = "gold" if golden else "white"
+
     
     def draw(self, screen): 
         pygame.draw.circle(screen, self.color, self.position, self.radius, 2)
@@ -23,7 +21,8 @@ class Asteroid(CircleShape):
         self.kill()
         if self.radius <= ASTEROID_MIN_RADIUS:
             if self.update_score: 
-                self.update_score(10)
+                value = 30 if self.golden else 10
+                self.update_score(value)
             return
         new_angle = random.uniform(20, 50)
         child1 = self.velocity.rotate(new_angle)
