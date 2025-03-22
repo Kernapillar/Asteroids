@@ -44,6 +44,7 @@ def main():
     text_rectangle = text.get_rect()
     text_rectangle.center = (100, SCREEN_HEIGHT - 50)
 
+    paused = False
 
 
     while True: 
@@ -53,8 +54,15 @@ def main():
         screen.fill("black")
         screen.blit(text, text_rectangle)
 
+        # Pause the game
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_p]:
+            paused = not paused
 
-        updateable.update(dt)
+
+        if not paused: 
+            updateable.update(dt)
+
 
         for asteroid in asteroids: 
             if player.detect_collision(asteroid):
