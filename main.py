@@ -31,20 +31,24 @@ def main():
     score = 0
 
     def update_score(num = 0):  
-        nonlocal score, text
+        nonlocal score, score_text
         score += num
-        text = font.render(f"Score: {score}", True, "White")
+        score_text = font.render(f"Score: {score}", True, "White")
 
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     player = Player(x = SCREEN_WIDTH / 2, y = SCREEN_HEIGHT / 2)
     asteroid_field = AsteroidField(update_score)
 
     font = pygame.font.Font(None, 32)
-    text = font.render(f"Score: {score}", True, "White")
-    text_rectangle = text.get_rect()
-    text_rectangle.center = (100, SCREEN_HEIGHT - 50)
+    score_text = font.render(f"Score: {score}", True, "White")
+    score_text_rect = score_text.get_rect()
+    score_text_rect.center = (100, SCREEN_HEIGHT - 50)
 
     paused = False
+    paused_font = pygame.font.Font(None, 50)
+    paused_text = paused_font.render(f"Game Paused", True, "White")
+    paused_text_rect = paused_text.get_rect()
+    paused_text_rect.center = (SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
 
 
     while True: 
@@ -52,7 +56,7 @@ def main():
             if event.type == pygame.QUIT:
                 return
         screen.fill("black")
-        screen.blit(text, text_rectangle)
+        screen.blit(score_text, score_text_rect)
 
         # Pause the game
         keys = pygame.key.get_pressed()
@@ -62,6 +66,8 @@ def main():
 
         if not paused: 
             updateable.update(dt)
+        else: 
+            screen.blit(paused_text, paused_text_rect)
 
 
         for asteroid in asteroids: 
