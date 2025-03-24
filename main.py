@@ -34,6 +34,10 @@ def main():
         nonlocal score, score_text
         score += num
         score_text = font.render(f"Score: {score}", True, "White")
+    
+    def game_over(): 
+        print(f"Game over! Final Score: {score}")
+        sys.exit()
 
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     player = Player(x = SCREEN_WIDTH / 2, y = SCREEN_HEIGHT / 2)
@@ -72,13 +76,11 @@ def main():
 
         for asteroid in asteroids: 
             if player.detect_collision(asteroid):
-                print(f"Game over! Final Score: {score}")
-                sys.exit()
+                game_over()
 
         for explosion in explosions: 
             if player.detect_collision(explosion):
-                print(f"Game over! Final Score: {score}")
-                sys.exit()
+                game_over()
 
         for asteroid in asteroids: 
             for shot in shots: 
@@ -95,8 +97,6 @@ def main():
             for explosion in explosions: 
                 if asteroid.detect_collision(explosion):
                     asteroid.split()
-            
-
 
         for object in drawable: 
             object.draw(screen)
