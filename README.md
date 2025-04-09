@@ -1,4 +1,4 @@
-# 🪐 Asteroids 2, the Alex Kern Directors Cut
+# 🪐 Asteroids 2, the Alex Kern Director's Cut
 
 This is a personal version of the classic Asteroids game, built using Python and Pygame. I initially followed a tutorial to get the base game running, then extended it for fun with new gameplay mechanics and effects.
 
