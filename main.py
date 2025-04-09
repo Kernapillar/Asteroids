@@ -11,19 +11,20 @@ from explosion import Explosion
 def main(): 
     pygame.init()
 
-    updateable = pygame.sprite.Group()
+    world_updateable = pygame.sprite.Group()
+    player_updateable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
     asteroids = pygame.sprite.Group()
     shots = pygame.sprite.Group()
     bombs = pygame.sprite.Group()
     explosions = pygame.sprite.Group()
     
-    Player.containers = (updateable, drawable)
-    Asteroid.containers = (asteroids, updateable, drawable)
-    AsteroidField.containers = (updateable)
-    Shot.containers = (updateable, drawable, shots)
-    Bomb.containers = (updateable, drawable, bombs)
-    Explosion.containers = (updateable, drawable, explosions)
+    Player.containers = (player_updateable, drawable)
+    Asteroid.containers = (asteroids, world_updateable, drawable)
+    AsteroidField.containers = (world_updateable)
+    Shot.containers = (world_updateable, drawable, shots)
+    Bomb.containers = (world_updateable, drawable, bombs)
+    Explosion.containers = (world_updateable, drawable, explosions)
 
     clock = pygame.time.Clock()
     dt = 0
@@ -54,19 +55,27 @@ def main():
     paused_text_rect = paused_text.get_rect()
     paused_text_rect.center = (SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
 
+    slow_motion = False
+    time_scale = 1
 
     while True: 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
             elif event.type == pygame.KEYDOWN: 
-                if event.key== pygame.K_p: 
+                if event.key == pygame.K_p: 
                     paused = not paused
+                elif event.key == pygame.K_c: 
+                    slow_motion = not slow_motion
+                    time_scale = 0.3 if slow_motion else 1.0
         screen.fill("black")
         screen.blit(score_text, score_text_rect)
 
+        scaled_dt = dt * time_scale
+
         if not paused: 
-            updateable.update(dt)
+            player_updateable.update(dt)
+            world_updateable.update(scaled_dt)
         else: 
             screen.blit(paused_text, paused_text_rect)
 
