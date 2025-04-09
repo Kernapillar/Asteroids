@@ -59,14 +59,11 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
+            elif event.type == pygame.KEYDOWN: 
+                if event.key== pygame.K_p: 
+                    paused = not paused
         screen.fill("black")
         screen.blit(score_text, score_text_rect)
-
-        # Pause the game
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_p]:
-            paused = not paused
-
 
         if not paused: 
             updateable.update(dt)
