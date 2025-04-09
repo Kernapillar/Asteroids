@@ -51,4 +51,4 @@ python3 main.py
 
 ## Notes
 - tested with Python 3.12.1 and pygame 2.6.1 on macOS
-- controls can be adjusted by changing the mapping at the bottom of the **player.py** file
+- controls can be adjusted by changing the mapping at the bottom of the **player.py** file or at the start of the game loop in **main.py**
