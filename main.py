@@ -87,9 +87,7 @@ def main():
 
             if slow_motion and sm_duration_timer > 0: 
                 sm_duration_timer -= dt
-                print(sm_duration_timer)
             elif slow_motion: 
-                print("STOPPED SLOW MOTION", slow_motion)
                 slow_motion = False
                 sm_cd_timer = SLOW_TIME_CD
                 time_scale = NORMAL_TIME
