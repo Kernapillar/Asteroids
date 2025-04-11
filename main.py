@@ -56,7 +56,9 @@ def main():
     paused_text_rect.center = (SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
 
     slow_motion = False
-    time_scale = 1
+    time_scale = NORMAL_TIME
+    sm_cd_timer = 0
+    sm_duration_timer = 0
 
     while True: 
         for event in pygame.event.get():
@@ -66,8 +68,14 @@ def main():
                 if event.key == pygame.K_p: 
                     paused = not paused
                 elif event.key == pygame.K_c: 
-                    slow_motion = not slow_motion
-                    time_scale = 0.3 if slow_motion else 1.0
+                    if sm_cd_timer > 0: 
+                        continue
+                    if sm_duration_timer > 0: 
+                        sm_duration_timer = 0
+                        continue
+                    slow_motion = True
+                    sm_duration_timer = SLOW_TIME_DURATION
+                    time_scale = SLOW_TIME if slow_motion else NORMAL_TIME
         screen.fill("black")
         screen.blit(score_text, score_text_rect)
 
@@ -76,6 +84,18 @@ def main():
         if not paused: 
             player_updateable.update(dt)
             world_updateable.update(scaled_dt)
+
+            if slow_motion and sm_duration_timer > 0: 
+                sm_duration_timer -= dt
+                print(sm_duration_timer)
+            elif slow_motion: 
+                print("STOPPED SLOW MOTION", slow_motion)
+                slow_motion = False
+                sm_cd_timer = SLOW_TIME_CD
+                time_scale = NORMAL_TIME
+            
+            if sm_cd_timer > 0: 
+                sm_cd_timer -= dt
         else: 
             screen.blit(paused_text, paused_text_rect)
 
